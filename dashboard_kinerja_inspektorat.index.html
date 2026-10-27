@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kinerja ASN - Inspektorat Daerah Kabupaten Karangasem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Times New Roman style for print -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        karangasem: {
+                            800: '#1e3a8a', // Deep Navy Blue
+                            900: '#0f172a', // Dark Navy
+                            gold: '#d97706', // Accent Amber Gold
+                            light: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Print Styling according to Official Naskah Dinas Standards */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 2cm 2cm 2cm 2cm;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                font-family: 'Times New Roman', Times, serif !important;
+                font-size: 12pt !important;
+                line-height: 1.5 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-page-break {
+                page-break-before: always;
+            }
+            /* Table formatting in print */
+            table.dinas-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 10pt !important;
+                margin-bottom: 10pt !important;
+            }
+            table.dinas-table th, table.dinas-table td {
+                border: 1px solid #000 !important;
+                padding: 5pt 6pt !important;
+                font-size: 10pt !important;
+                word-wrap: break-word !important;
+            }
+            table.dinas-table th {
+                background-color: #f2f2f2 !important;
+                font-weight: bold !important;
+                text-align: center !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white shadow-xl sticky top-0 z-50 no-print border-b-2 border-amber-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3.5">
+                <div class="bg-amber-500 text-slate-950 p-2.5 rounded-xl shadow-md font-extrabold text-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                        SIAP-WILDWAS
+                        <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-medium hidden sm:inline-block">PermenPANRB No.6/2022</span>
+                    </h1>
+                    <p class="text-xs text-slate-300">Inspektorat Daerah Kabupaten Karangasem - Irban Wilayah I</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-3">
+                <a href="https://drive.google.com/drive/folders/1coLR9FGJFSGL286HmlxdQhVvWtydiuse?usp=drive_link" target="_blank" class="px-3.5 py-2 bg-slate-800/90 hover:bg-slate-800 border border-slate-700 text-amber-400 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
+                    <i class="fa-brands fa-google-drive text-emerald-400 text-sm"></i> Folder Drive Bukti Dukung
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Responsive Body Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- ASN & Atasan Direct Profile Card -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative overflow-hidden no-print">
+            <div class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-blue-900 to-amber-500"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                <!-- Pegawai Yang Dinilai -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-900 text-amber-400 flex items-center justify-center text-2xl font-bold shadow-md flex-shrink-0 border border-amber-500/30">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-blue-800 tracking-wider bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Pegawai Yang Dinilai</span>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">I Gede Kaneka Setiawan, S.STP., M.PA.</h2>
+                        <div class="text-xs text-slate-600 space-y-0.5 mt-1">
+                            <p><i class="fa-solid fa-id-card text-slate-400 w-4"></i> NIP: 19830809 200212 1 001</p>
+                            <p><i class="fa-solid fa-briefcase text-slate-400 w-4"></i> Inspektur Pembantu Wilayah I</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pejabat Penilai Kinerja / Atasan Langsung -->
+                <div class="flex items-center space-x-4 border-t lg:border-t-0 lg:border-l border-slate-200 pt-4 lg:pt-0 lg:pl-6">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-800 text-amber-400 flex items-center justify-center text-2xl font-bold shadow-md flex-shrink-0 border border-slate-700">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-amber-700 tracking-wider bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Pejabat Penilai Kinerja / Atasan Langsung</span>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Drs. I Wayan Sutapa, M.Si.</h2>
+                        <div class="text-xs text-slate-600 space-y-0.5 mt-1">
+                            <p><i class="fa-solid fa-id-card text-slate-400 w-4"></i> NIP: 19691102 199003 1 006</p>
+                            <p><i class="fa-solid fa-briefcase text-slate-400 w-4"></i> Inspektur Daerah Kabupaten Karangasem</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Statistics Row -->
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 no-print">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Laporan Harian</p>
+                    <h3 id="stat-total" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Kegiatan Terinput</p>
+                </div>
+                <div class="w-11 h-11 bg-blue-50 text-blue-800 rounded-xl flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+            </div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Durasi Jam</p>
+                    <h3 id="stat-hours" class="text-2xl font-extrabold text-slate-900 mt-1">0 Jam</h3>
+                    <p class="text-[11px] text-emerald-600 font-medium mt-0.5"><i class="fa-solid fa-clock"></i> Akumulasi Jam Kinerja</p>
+                </div>
+                <div class="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-stopwatch"></i>
+                </div>
+            </div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Bukti Dukung File</p>
+                    <h3 id="stat-files" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                    <p class="text-[11px] text-amber-600 font-medium mt-0.5"><i class="fa-solid fa-file-circle-check"></i> File Direct Upload</p>
+                </div>
+                <div class="w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-paperclip"></i>
+                </div>
+            </div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Capaian SKP</p>
+                    <h3 id="stat-status" class="text-2xl font-extrabold text-slate-900 mt-1">100%</h3>
+                    <p class="text-[11px] text-blue-600 font-medium mt-0.5"><i class="fa-solid fa-shield-check"></i> PermenPANRB No.6/2022</p>
+                </div>
+                <div class="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 overflow-x-auto no-scrollbar no-print bg-white rounded-t-2xl px-3 pt-2">
+            <button onclick="switchTab('tab-input')" id="btn-tab-input" class="tab-btn px-5 py-3 text-xs sm:text-sm font-bold border-b-2 border-blue-900 text-blue-900 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-pen-to-square"></i> Input Laporan Harian SKP
+            </button>
+            <button onclick="switchTab('tab-spreadsheet')" id="btn-tab-spreadsheet" class="tab-btn px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-table"></i> Spreadsheet Rekapitulasi Data
+            </button>
+            <button onclick="switchTab('tab-export')" id="btn-tab-export" class="tab-btn px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-file-export"></i> Download Laporan Naskah Dinas (Word/Excel/PDF)
+            </button>
+        </div>
+
+        <!-- TAB CONTENT 1: FORM INPUT HARIAN & DIRECT FILE UPLOAD -->
+        <div id="tab-input" class="tab-content bg-white rounded-b-2xl border-x border-b border-slate-200 shadow-sm p-6 no-print">
+            <div class="mb-6 border-b border-slate-100 pb-4 flex justify-between items-center">
+                <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">Form Penginputan Kinerja Harian ASN</h3>
+                    <p class="text-xs text-slate-500">Isi rincian aktivitas pengawasan dan unggah berkas bukti dukung fisik/digital secara langsung.</p>
+                </div>
+                <span class="text-xs bg-slate-100 text-slate-600 font-semibold px-3 py-1 rounded-lg hidden sm:inline-block">Irban Wilayah I</span>
+            </div>
+
+            <form id="activity-form" onsubmit="saveActivity(event)" class="space-y-5">
+                <input type="hidden" id="edit-id">
+
+                <!-- Tanggal & Jam Mulai - Selesai -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tanggal Pelaksanaan *</label>
+                        <input type="date" id="input-tanggal" required class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Jam Mulai *</label>
+                        <input type="time" id="input-jam-mulai" value="08:00" required onchange="calculateHours()" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Jam Selesai *</label>
+                        <input type="time" id="input-jam-selesai" value="12:00" required onchange="calculateHours()" class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    </div>
+                </div>
+
+                <!-- RHK Atasan & RHK Individu -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Rencana Hasil Kerja (RHK) Atasan Langsung *</label>
+                        <select id="input-rhk-atasan" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                            <option value="Terwujudnya Pengawasan Internal Yang Efektif dan Akuntabel Pada Pemerintah Kabupaten Karangasem">RHK Atasan 1: Pengawasan Internal Efektif & Akuntabel Pemkab Karangasem</option>
+                            <option value="Terwujudnya Tata Kelola Pemerintahan Desa Yang Transparan dan Sesuai Ketentuan">RHK Atasan 2: Pendampingan & Tata Kelola Pemerintahan Desa</option>
+                            <option value="Meningkatnya Kepatuhan Penyelesaian Tindak Lanjut Hasil Pemeriksaan (TLHP)">RHK Atasan 3: Tindak Lanjut Hasil Pemeriksaan (TLHP) BPK & Inspektorat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Rencana Hasil Kerja (RHK) Individu SKP *</label>
+                        <select id="input-rhk-individu" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                            <option value="Terlaksananya Reviu / Evaluasi / Audit Pengelolaan Keuangan & Kinerja OPD Wilayah I">RHK Individu 1: Reviu / Evaluasi / Audit Keuangan & Kinerja OPD Wilayah I</option>
+                            <option value="Terlaksananya Asistensi, Konsultasi & Pendampingan Tata Kelola Desa">RHK Individu 2: Asistensi, Konsultasi & Pendampingan Keuangan Desa</option>
+                            <option value="Terlaksananya Verifikasi & Evaluasi Pemantauan Tindak Lanjut (TLHP)">RHK Individu 3: Verifikasi & Evaluasi Pemantauan TLHP BPK / Itda</option>
+                            <option value="Terlaksananya Penugasan Khusus / Tim Khusus Dari Inspektur Daerah">RHK Individu 4: Penugasan Khusus / Tim Pemeriksaan Khusus Inspektur</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Uraian Aktivitas -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Uraian Aktivitas / Rincian Kegiatan Harian *</label>
+                    <textarea id="input-uraian" rows="3" placeholder="Contoh: Melaksanakan reviu KAK dan Laporan Keuangan Desa Triwulan I pada Kecamatan Karangasem serta menyusun konsep NPH..." required class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800"></textarea>
+                </div>
+
+                <!-- Output, Volume, Satuan, & Durasi -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Volume Output *</label>
+                        <input type="number" id="input-volume" min="1" value="1" required class="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Satuan Output *</label>
+                        <select id="input-satuan" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                            <option value="Laporan">Laporan</option>
+                            <option value="Dokumen">Dokumen</option>
+                            <option value="Berkas">Berkas</option>
+                            <option value="Kegiatan">Kegiatan</option>
+                            <option value="Naskah/LHP">Naskah / LHP</option>
+                            <option value="BAP">BAP / Lembar Kerja</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Durasi (Jam) *</label>
+                        <input type="number" id="input-durasi" step="0.5" readonly class="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-2.5 text-xs sm:text-sm font-bold text-slate-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Status Kegiatan *</label>
+                        <select id="input-status" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-800">
+                            <option value="Selesai">Selesai (100%)</option>
+                            <option value="Dalam Proses">Dalam Proses</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DIRECT FILE UPLOAD BOX WITH DRIVE BACKUP LINK -->
+                <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-5 hover:border-blue-700 transition">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
+                        <label class="block text-xs font-bold text-slate-800 uppercase flex items-center">
+                            <i class="fa-solid fa-cloud-arrow-up text-blue-800 text-sm mr-2"></i> Direct File Upload Bukti Dukung (PDF/DOCX/XLSX/Image)
+                        </label>
+                        <a href="https://drive.google.com/drive/folders/1coLR9FGJFSGL286HmlxdQhVvWtydiuse?usp=drive_link" target="_blank" class="text-[11px] text-blue-700 hover:underline flex items-center gap-1 font-semibold">
+                            <i class="fa-brands fa-google-drive text-emerald-600"></i> Folder Google Drive
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <input type="file" id="input-file" onchange="handleFileSelect(event)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-900 file:text-white hover:file:bg-blue-800">
+                            <p class="text-[11px] text-slate-500 mt-1.5">Maksimal file 5MB. Otomatis tersimpan secara lokal dan dikatalogkan.</p>
+                        </div>
+                        <div>
+                            <input type="text" id="input-file-desc" placeholder="Keterangan Berkas / Judul File Bukti Dukung" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-800">
+                        </div>
+                    </div>
+
+                    <!-- File Selected Active Preview -->
+                    <div id="file-preview-box" class="hidden mt-3 p-3 bg-white border border-blue-200 rounded-xl flex items-center justify-between text-xs">
+                        <div class="flex items-center space-x-2 text-blue-900 font-medium truncate">
+                            <i class="fa-solid fa-file-circle-check text-emerald-600 text-base"></i>
+                            <span id="preview-filename" class="truncate">nama_file.pdf</span>
+                        </div>
+                        <button type="button" onclick="removeSelectedFile()" class="text-rose-600 hover:text-rose-800 text-xs font-semibold">Batal File</button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="resetForm()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition">
+                        Reset Form
+                    </button>
+                    <button type="submit" id="btn-submit-form" class="px-6 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk text-amber-400"></i> Simpan Laporan Harian
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- TAB CONTENT 2: SPREADSHEET REKAPITULASI DATA -->
+        <div id="tab-spreadsheet" class="tab-content hidden bg-white rounded-b-2xl border-x border-b border-slate-200 shadow-sm p-6 no-print">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Spreadsheet Rekapitulasi Data Kinerja Harian ASN</h3>
+                    <p class="text-xs text-slate-500">Rekapan seluruh penginputan harian, volume output, durasi jam kerja, dan berkas bukti dukung.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <div class="relative flex-grow sm:flex-grow-0">
+                        <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="search-table" oninput="renderTable()" placeholder="Cari uraian atau RHK..." class="w-full sm:w-64 pl-9 pr-4 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-blue-800">
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-900 text-white font-semibold uppercase text-[11px] tracking-wider">
+                            <th class="p-3 text-center w-10">No</th>
+                            <th class="p-3 whitespace-nowrap">Tanggal & Jam</th>
+                            <th class="p-3">RHK Individu SKP</th>
+                            <th class="p-3">Uraian Rincian Aktivitas Kegiatan</th>
+                            <th class="p-3 text-center">Volume</th>
+                            <th class="p-3 text-center">Durasi</th>
+                            <th class="p-3 text-center">Status</th>
+                            <th class="p-3 text-center">Bukti Dukung</th>
+                            <th class="p-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="divide-y divide-slate-200">
+                        <!-- JS Dynamic Insertion -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="table-empty" class="hidden text-center py-12 text-slate-400">
+                <i class="fa-solid fa-folder-open text-4xl mb-2 text-slate-300"></i>
+                <p class="text-xs">Belum ada data laporan harian tercatat pada periode ini.</p>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 3: DOWNLOAD LAPORAN NASKAH DINAS (WORD, EXCEL, PDF) -->
+        <div id="tab-export" class="tab-content hidden bg-white rounded-b-2xl border-x border-b border-slate-200 shadow-sm p-6 sm:p-8 space-y-8">
+            
+            <!-- Filter Date Range Control Box -->
+            <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 rounded-2xl p-6 text-white shadow-md no-print">
+                <div class="mb-4">
+                    <h3 class="text-base sm:text-lg font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-amber-400"></i>
+                        Filter Periode Cetak Laporan (01 Januari s.d. Kondisi Terakhir)
+                    </h3>
+                    <p class="text-xs text-slate-300 mt-1">Pilih tanggal awal dan akhir untuk mengompilasi laporan kinerja dan naskah dinas resmi.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-semibold text-amber-300 mb-1">Tanggal Mulai (Awal Tahun)</label>
+                        <input type="date" id="filter-start-date" class="w-full rounded-xl bg-slate-800 border border-slate-600 text-white px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-amber-300 mb-1">Tanggal Akhir (Kondisi Terakhir)</label>
+                        <input type="date" id="filter-end-date" class="w-full rounded-xl bg-slate-800 border border-slate-600 text-white px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <button onclick="applyDateFilter()" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold rounded-xl shadow transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-filter"></i> Terapkan Filter Periode
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Buttons Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 no-print">
+                <!-- Word Download Button -->
+                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-10 h-10 bg-blue-800 text-white rounded-xl flex items-center justify-center text-lg mb-3 shadow-sm">
+                            <i class="fa-solid fa-file-word"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm">Unduh Naskah Word (.doc/.docx)</h4>
+                        <p class="text-xs text-slate-600 mt-1">Sesuai Format Naskah Dinas Resmi, Sistematika Bab I-IV, Kop Surat, dan Lembar Pengesahan Atasan.</p>
+                    </div>
+                    <button onclick="downloadWord()" class="mt-5 w-full py-2.5 bg-blue-800 hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Unduh Laporan Word
+                    </button>
+                </div>
+
+                <!-- Excel Download Button -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center text-lg mb-3 shadow-sm">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm">Unduh Excel Spreadsheet (.csv)</h4>
+                        <p class="text-xs text-slate-600 mt-1">Format data matriks terstruktur, lengkap dengan header instansi dan RHK SKP.</p>
+                    </div>
+                    <button onclick="downloadExcel()" class="mt-5 w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Unduh Spreadsheet Excel
+                    </button>
+                </div>
+
+                <!-- PDF Print Download Button -->
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-10 h-10 bg-amber-600 text-white rounded-xl flex items-center justify-center text-lg mb-3 shadow-sm">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm">Cetak / Simpan PDF (A4)</h4>
+                        <p class="text-xs text-slate-600 mt-1">Tata letak cetak A4 rapi, margin standar naskah dinas 2cm, dan format tanda tangan sejajar.</p>
+                    </div>
+                    <button onclick="downloadPDF()" class="mt-5 w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-print"></i> Cetak / Unduh PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- OFFICIAL REPORT DOCUMENT DISPLAY AREA (PRINT & WORD SOURCE) -->
+            <div id="official-report-doc" class="bg-white border border-slate-300 rounded-2xl p-8 sm:p-12 text-slate-900 font-serif leading-relaxed text-xs sm:text-sm shadow-sm">
+                
+                <!-- OFFICIAL KOP SURAT PEMKAB KARANGASEM -->
+                <div class="text-center border-b-4 border-double border-slate-900 pb-3 mb-6">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-800">PEMERINTAH KABUPATEN KARANGASEM</h3>
+                    <h2 class="text-base sm:text-xl font-black uppercase text-slate-900 mt-0.5">INSPEKTORAT DAERAH</h2>
+                    <p class="text-[11px] text-slate-700 mt-0.5 font-sans">Jalan Jenderal Sudirman No. 20 Amlapura, Bali (80811)</p>
+                    <p class="text-[10px] text-slate-600 font-sans">Telepon: (0363) 21048 | Email: inspektorat@karangasemkab.go.id</p>
+                </div>
+
+                <!-- JUDUL LAPORAN PERMENPANRB NO 6 TAHUN 2022 -->
+                <div class="text-center my-6">
+                    <h3 class="text-sm sm:text-base font-bold uppercase underline tracking-wide">LAPORAN CAPAIAN KINERJA HARIAN ASN</h3>
+                    <p class="text-xs text-slate-700 font-sans mt-1">Periode Pelaksanaan: <span id="report-period-str" class="font-bold text-slate-900">01 Januari 2026 s.d. Kondisi Terakhir</span></p>
+                </div>
+
+                <!-- IDENTITAS PEGAWAI & ATASAN LANGSUNG -->
+                <div class="mb-6 font-sans text-xs">
+                    <table class="w-full border-none">
+                        <tr>
+                            <td class="w-1/2 align-top pr-3">
+                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                                    <p class="font-bold text-blue-900 uppercase mb-1.5 border-b pb-1 border-slate-200">I. PEGAWAI YANG DINILAI</p>
+                                    <p><span class="font-semibold text-slate-600">Nama:</span> I Gede Kaneka Setiawan, S.STP., M.PA.</p>
+                                    <p><span class="font-semibold text-slate-600">NIP:</span> 19830809 200212 1 001</p>
+                                    <p><span class="font-semibold text-slate-600">Jabatan:</span> Inspektur Pembantu Wilayah I</p>
+                                    <p><span class="font-semibold text-slate-600">Unit Kerja:</span> Inspektorat Daerah Kab. Karangasem</p>
+                                </div>
+                            </td>
+                            <td class="w-1/2 align-top pl-3">
+                                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                                    <p class="font-bold text-amber-800 uppercase mb-1.5 border-b pb-1 border-slate-200">II. PEJABAT PENILAI KINERJA</p>
+                                    <p><span class="font-semibold text-slate-600">Nama:</span> Drs. I Wayan Sutapa, M.Si.</p>
+                                    <p><span class="font-semibold text-slate-600">NIP:</span> 19691102 199003 1 006</p>
+                                    <p><span class="font-semibold text-slate-600">Jabatan:</span> Inspektur Daerah Kabupaten Karangasem</p>
+                                    <p><span class="font-semibold text-slate-600">Unit Kerja:</span> Inspektorat Daerah Kab. Karangasem</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- NARASI SISTEMATIKA LAPORAN DINAS -->
+                <div class="space-y-5 text-justify font-sans text-xs sm:text-sm">
+                    
+                    <!-- BAB I PENDAHULUAN -->
+                    <div>
+                        <h4 class="font-bold text-slate-900 uppercase">I. PENDAHULUAN</h4>
+                        <div class="pl-4 space-y-2 mt-1.5 text-slate-800">
+                            <p><strong>A. Latar Belakang:</strong> Berdasarkan Peraturan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi (PermenPANRB) Nomor 6 Tahun 2022 tentang Pengelolaan Kinerja Pegawai Aparatur Sipil Negara, setiap ASN diwajibkan menyusun dan melaporkan capaian kinerja harian secara akuntabel, transparan, dan berbasis bukti dukung fisik/digital (evidence) guna mendukung tercapainya tujuan organisasi pada Inspektorat Daerah Kabupaten Karangasem.</p>
+                            <p><strong>B. Dasar Hukum:</strong></p>
+                            <ol class="list-decimal pl-5 space-y-0.5">
+                                <li>Undang-Undang Nomor 20 Tahun 2023 tentang Aparatur Sipil Negara.</li>
+                                <li>Peraturan Pemerintah Nomor 94 Tahun 2021 tentang Disiplin Pegawai Negeri Sipil.</li>
+                                <li>PermenPANRB Nomor 6 Tahun 2022 tentang Pengelolaan Kinerja Pegawai ASN.</li>
+                                <li>Peraturan Bupati Karangasem tentang Penyelenggaraan Pengawasan Internal Pemerintah.</li>
+                            </ol>
+                            <p><strong>C. Maksud dan Tujuan:</strong> Laporan ini disusun untuk mempertanggungjawabkan pelaksanaan tugas pengawasan harian Inspektur Pembantu Wilayah I, memberikan gambaran progres Rencana Hasil Kerja (RHK) SKP, serta menyediakan rekapitulasi bukti dukung kerja yang terstruktur.</p>
+                        </div>
+                    </div>
+
+                    <!-- BAB II PELAKSANAAN TUGAS DAN REKAPITULASI KINERJA -->
+                    <div>
+                        <h4 class="font-bold text-slate-900 uppercase">II. PELAKSANAAN TUGAS DAN REKAPITULASI KINERJA</h4>
+                        <p class="pl-4 mt-1">Selama periode pelaksanaan kinerja harian, aktivitas pengawasan internal, evaluasi, reviu, pendampingan desa, serta monitoring Tindak Lanjut Hasil Pemeriksaan (TLHP) dirinci pada tabel rekapitulasi berikut:</p>
+                        
+                        <!-- TABEL REKAPITULASI DINAS -->
+                        <div class="overflow-x-auto my-3">
+                            <table class="dinas-table w-full border-collapse border border-slate-900 text-[11px] font-sans">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-900 font-bold uppercase text-center border-b border-slate-900">
+                                        <th class="p-2 border border-slate-900 w-8">No</th>
+                                        <th class="p-2 border border-slate-900 w-24">Tanggal & Waktu</th>
+                                        <th class="p-2 border border-slate-900">Rencana Hasil Kerja (RHK) & Uraian Aktivitas</th>
+                                        <th class="p-2 border border-slate-900 w-16">Output</th>
+                                        <th class="p-2 border border-slate-900 w-16">Durasi</th>
+                                        <th class="p-2 border border-slate-900 w-16">Status</th>
+                                        <th class="p-2 border border-slate-900 w-32">Bukti Dukung</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-table-body" class="divide-y divide-slate-900">
+                                    <!-- Dynamic Table Content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- BAB III EVALUASI DAN HAMBATAN -->
+                    <div>
+                        <h4 class="font-bold text-slate-900 uppercase">III. EVALUASI KINERJA DAN HAMBATAN</h4>
+                        <p class="pl-4 mt-1 text-slate-800">Pelaksanaan seluruh rencana target kinerja harian telah berjalan efektif dan tepat waktu sesuai jadwal Program Kerja Pengawasan YPTD (PKPT) Irban Wilayah I. Hambatan operasional di lapangan secara umum dapat dikoordinasikan dengan baik bersama tim auditor dan OPD/Pemerintah Desa terkait.</p>
+                    </div>
+
+                    <!-- BAB IV PENUTUP -->
+                    <div>
+                        <h4 class="font-bold text-slate-900 uppercase">IV. PENUTUP</h4>
+                        <p class="pl-4 mt-1 text-slate-800">Demikian Laporan Capaian Kinerja Harian ASN ini dibuat dengan sebenarnya sesuai dengan data penginputan dan bukti dukung yang sah untuk dipergunakan sebagaimana mestinya sebagai bahan evaluasi kinerja SKP periodik.</p>
+                    </div>
+
+                </div>
+
+                <!-- V. LEMBAR PENGESAHAN TANDA TANGAN SEJAJAR / SANDING -->
+                <div class="pt-8 mt-8 border-t border-slate-300 font-sans text-xs">
+                    <table class="w-full text-center border-none">
+                        <tr>
+                            <td class="w-1/2 align-top px-2">
+                                <p class="text-slate-700">Mengetahui / Menyetujui,</p>
+                                <p class="font-bold text-slate-900 mt-0.5 uppercase">PEJABAT PENILAI KINERJA</p>
+                                <p class="font-bold text-slate-900 uppercase">INSPEKTUR DAERAH KABUPATEN KARANGASEM</p>
+                                <div class="h-24 flex items-center justify-center">
+                                    <span class="text-[10px] text-slate-400 italic border border-dashed border-slate-300 px-3 py-1 rounded">Tanda Tangan / Stempel Dinas</span>
+                                </div>
+                                <p class="font-bold underline text-slate-900">Drs. I WAYAN SUTAPA, M.Si.</p>
+                                <p class="text-slate-700">Pembina Utama Muda (IV/c)</p>
+                                <p class="text-slate-700">NIP. 19691102 199003 1 006</p>
+                            </td>
+                            <td class="w-1/2 align-top px-2">
+                                <p class="text-slate-700">Amlapura, <span id="report-current-date"></span></p>
+                                <p class="font-bold text-slate-900 mt-0.5 uppercase">PEGAWAI YANG DINILAI</p>
+                                <p class="font-bold text-slate-900 uppercase">INSPEKTUR PEMBANTU WILAYAH I</p>
+                                <div class="h-24 flex items-center justify-center">
+                                    <span class="text-[10px] text-slate-400 italic border border-dashed border-slate-300 px-3 py-1 rounded">Tanda Tangan Pegawai</span>
+                                </div>
+                                <p class="font-bold underline text-slate-900">I GEDE KANEKA SETIAWAN, S.STP., M.PA.</p>
+                                <p class="text-slate-700">Pembina Tk I (IV/b)</p>
+                                <p class="text-slate-700">NIP. 19830809 200212 1 001</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Custom System Modal -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
+            <div id="modal-icon" class="w-12 h-12 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+                <h4 id="modal-title" class="font-bold text-slate-900 text-base">Informasi</h4>
+                <p id="modal-message" class="text-xs text-slate-600 mt-1">Pesan sistem berhasil.</p>
+            </div>
+            <button onclick="closeModal()" class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                Tutup Window
+            </button>
+        </div>
+    </div>
+
+    <!-- Core Javascript Application Logic -->
+    <script>
+        // Initial Default Dataset starting 01 January 2026
+        const defaultData2026 = [
+            {
+                id: 1001,
+                tanggal: '2026-01-05',
+                jamMulai: '08:30',
+                jamSelesai: '15:30',
+                rhkAtasan: 'Terwujudnya Pengawasan Internal Yang Efektif dan Akuntabel Pada Pemerintah Kabupaten Karangasem',
+                rhkIndividu: 'Terlaksananya Reviu / Evaluasi / Audit Pengelolaan Keuangan & Kinerja OPD Wilayah I',
+                uraian: 'Penyusunan dan pembahasan Rencana Kerja Pemeriksaan Tahunan (PKPT) Irban Wilayah I Tahun Anggaran 2026.',
+                volume: 1,
+                satuan: 'Dokumen',
+                jam: 7.0,
+                status: 'Selesai',
+                fileName: 'PKPT_Irban1_2026_Final.pdf'
+            },
+            {
+                id: 1002,
+                tanggal: '2026-01-14',
+                jamMulai: '09:00',
+                jamSelesai: '13:00',
+                rhkAtasan: 'Terwujudnya Tata Kelola Pemerintahan Desa Yang Transparan dan Sesuai Ketentuan',
+                rhkIndividu: 'Terlaksananya Asistensi, Konsultasi & Pendampingan Tata Kelola Desa',
+                uraian: 'Pelaksanaan Asistensi Tata Kelola Anggaran Pendapatan dan Belanja Desa (APBDes) Se-Kecamatan Karangasem.',
+                volume: 2,
+                satuan: 'Kegiatan',
+                jam: 4.0,
+                status: 'Selesai',
+                fileName: 'Asistensi_APBDes_Karangasem.docx'
+            },
+            {
+                id: 1003,
+                tanggal: '2026-02-02',
+                jamMulai: '08:00',
+                jamSelesai: '14:30',
+                rhkAtasan: 'Meningkatnya Kepatuhan Penyelesaian Tindak Lanjut Hasil Pemeriksaan (TLHP)',
+                rhkIndividu: 'Terlaksananya Verifikasi & Evaluasi Pemantauan Tindak Lanjut (TLHP)',
+                uraian: 'Monitoring dan verifikasi penyelesaian Kerugian Daerah serta Pemantauan Tindak Lanjut Hasil Pemeriksaan BPK-RI.',
+                volume: 1,
+                satuan: 'Laporan',
+                jam: 6.5,
+                status: 'Selesai',
+                fileName: 'Matriks_TLHP_BPK_2026.xlsx'
+            }
+        ];
+
+        let activities = JSON.parse(localStorage.getItem('kaneka_asn_kinerja_2026')) || defaultData2026;
+        let selectedFileBase64 = '';
+        let selectedFileName = '';
+
+        window.onload = function() {
+            // Set input date default today
+            document.getElementById('input-tanggal').valueAsDate = new Date();
+            calculateHours();
+
+            // Filter Default: 01 Jan 2026 to Today
+            document.getElementById('filter-start-date').value = '2026-01-01';
+            document.getElementById('filter-end-date').valueAsDate = new Date();
+
+            // Current date string formatting for report footer
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('report-current-date').innerText = new Date().toLocaleDateString('id-ID', dateOptions);
+
+            updateDashboardData();
+        };
+
+        // Time Calculator
+        function calculateHours() {
+            const start = document.getElementById('input-jam-mulai').value;
+            const end = document.getElementById('input-jam-selesai').value;
+            if (start && end) {
+                const startTime = new Date(`1970-01-01T${start}:00`);
+                const endTime = new Date(`1970-01-01T${end}:00`);
+                let diff = (endTime - startTime) / (1000 * 60 * 60);
+                if (diff < 0) diff += 24;
+                document.getElementById('input-durasi').value = diff.toFixed(1);
+            }
+        }
+
+        // Direct File Picker Handler
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                showModal('Ukuran File Terlalu Besar', 'Maksimal ukuran file bukti dukung adalah 5MB.');
+                event.target.value = '';
+                return;
+            }
+
+            selectedFileName = file.name;
+            document.getElementById('input-file-desc').value = file.name;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedFileBase64 = e.target.result;
+                document.getElementById('preview-filename').innerText = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+                document.getElementById('file-preview-box').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeSelectedFile() {
+            selectedFileBase64 = '';
+            selectedFileName = '';
+            document.getElementById('input-file').value = '';
+            document.getElementById('input-file-desc').value = '';
+            document.getElementById('file-preview-box').classList.add('hidden');
+        }
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('border-blue-900', 'text-blue-900');
+                el.classList.add('border-transparent', 'text-slate-500');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+
+            const btnMap = {
+                'tab-input': 'btn-tab-input',
+                'tab-spreadsheet': 'btn-tab-spreadsheet',
+                'tab-export': 'btn-tab-export'
+            };
+
+            if (btnMap[tabId]) {
+                const activeBtn = document.getElementById(btnMap[tabId]);
+                activeBtn.classList.add('border-blue-900', 'text-blue-900');
+                activeBtn.classList.remove('border-transparent', 'text-slate-500');
+            }
+
+            if (tabId === 'tab-spreadsheet' || tabId === 'tab-export') {
+                updateDashboardData();
+            }
+        }
+
+        // Save / Update Activity
+        function saveActivity(e) {
+            e.preventDefault();
+
+            const editId = document.getElementById('edit-id').value;
+            const tanggal = document.getElementById('input-tanggal').value;
+            const jamMulai = document.getElementById('input-jam-mulai').value;
+            const jamSelesai = document.getElementById('input-jam-selesai').value;
+            const rhkAtasan = document.getElementById('input-rhk-atasan').value;
+            const rhkIndividu = document.getElementById('input-rhk-individu').value;
+            const uraian = document.getElementById('input-uraian').value;
+            const volume = parseInt(document.getElementById('input-volume').value);
+            const satuan = document.getElementById('input-satuan').value;
+            const jam = parseFloat(document.getElementById('input-durasi').value);
+            const status = document.getElementById('input-status').value;
+            const fileDesc = document.getElementById('input-file-desc').value || selectedFileName || 'Bukti_Dukung_Fisik.pdf';
+
+            if (editId) {
+                const idx = activities.findIndex(a => a.id == editId);
+                if (idx !== -1) {
+                    activities[idx] = {
+                        ...activities[idx],
+                        tanggal, jamMulai, jamSelesai, rhkAtasan, rhkIndividu, uraian, volume, satuan, jam, status,
+                        fileName: fileDesc
+                    };
+                }
+                showModal('Berhasil Diperbarui', 'Laporan kinerja harian berhasil diperbarui.');
+            } else {
+                const newEntry = {
+                    id: Date.now(),
+                    tanggal,
+                    jamMulai,
+                    jamSelesai,
+                    rhkAtasan,
+                    rhkIndividu,
+                    uraian,
+                    volume,
+                    satuan,
+                    jam,
+                    status,
+                    fileName: fileDesc
+                };
+                activities.unshift(newEntry);
+                showModal('Berhasil Disimpan', 'Laporan kinerja harian & berkas bukti dukung tersimpan.');
+            }
+
+            localStorage.setItem('kaneka_asn_kinerja_2026', JSON.stringify(activities));
+            resetForm();
+            updateDashboardData();
+            switchTab('tab-spreadsheet');
+        }
+
+        function resetForm() {
+            document.getElementById('activity-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('input-tanggal').valueAsDate = new Date();
+            document.getElementById('input-jam-mulai').value = '08:00';
+            document.getElementById('input-jam-selesai').value = '12:00';
+            calculateHours();
+            removeSelectedFile();
+            document.getElementById('btn-submit-form').innerHTML = '<i class="fa-solid fa-floppy-disk text-amber-400"></i> Simpan Laporan Harian';
+        }
+
+        function editActivity(id) {
+            const item = activities.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('edit-id').value = item.id;
+            document.getElementById('input-tanggal').value = item.tanggal;
+            document.getElementById('input-jam-mulai').value = item.jamMulai || '08:00';
+            document.getElementById('input-jam-selesai').value = item.jamSelesai || '12:00';
+            document.getElementById('input-rhk-atasan').value = item.rhkAtasan;
+            document.getElementById('input-rhk-individu').value = item.rhkIndividu;
+            document.getElementById('input-uraian').value = item.uraian;
+            document.getElementById('input-volume').value = item.volume;
+            document.getElementById('input-satuan').value = item.satuan;
+            document.getElementById('input-status').value = item.status;
+            document.getElementById('input-file-desc').value = item.fileName || '';
+            calculateHours();
+
+            document.getElementById('btn-submit-form').innerHTML = '<i class="fa-solid fa-pen-to-square text-amber-400"></i> Perbarui Laporan Harian';
+            switchTab('tab-input');
+        }
+
+        function deleteActivity(id) {
+            activities = activities.filter(a => a.id !== id);
+            localStorage.setItem('kaneka_asn_kinerja_2026', JSON.stringify(activities));
+            updateDashboardData();
+            showModal('Data Dihapus', 'Catatan laporan kegiatan telah dihapus dari daftar.');
+        }
+
+        function applyDateFilter() {
+            updateDashboardData();
+            showModal('Filter Diterapkan', 'Daftar rekapitulasi disaring berdasarkan rentang tanggal pilihan.');
+        }
+
+        function getFilteredActivities() {
+            const startDate = document.getElementById('filter-start-date').value;
+            const endDate = document.getElementById('filter-end-date').value;
+
+            return activities.filter(a => {
+                if (!startDate && !endDate) return true;
+                if (startDate && a.tanggal < startDate) return false;
+                if (endDate && a.tanggal > endDate) return false;
+                return true;
+            });
+        }
+
+        function updateDashboardData() {
+            const filtered = getFilteredActivities();
+
+            const totalHours = filtered.reduce((acc, curr) => acc + (curr.jam || 0), 0);
+            const totalFiles = filtered.filter(a => a.fileName && a.fileName.trim() !== '').length;
+
+            document.getElementById('stat-total').innerText = filtered.length;
+            document.getElementById('stat-hours').innerText = totalHours.toFixed(1) + ' Jam';
+            document.getElementById('stat-files').innerText = totalFiles;
+
+            const startDate = document.getElementById('filter-start-date').value || '01-01-2026';
+            const endDate = document.getElementById('filter-end-date').value || 'Terakhir';
+            document.getElementById('report-period-str').innerText = `${startDate} s.d. ${endDate}`;
+
+            renderTable(filtered);
+            renderReportTable(filtered);
+        }
+
+        function renderTable(dataList) {
+            const searchVal = document.getElementById('search-table').value.toLowerCase();
+            const tbody = document.getElementById('table-body');
+            const emptyState = document.getElementById('table-empty');
+
+            const data = dataList || getFilteredActivities();
+            const searchFiltered = data.filter(a => 
+                a.uraian.toLowerCase().includes(searchVal) || 
+                a.rhkIndividu.toLowerCase().includes(searchVal)
+            );
+
+            tbody.innerHTML = '';
+
+            if (searchFiltered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            searchFiltered.forEach((act, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-medium text-slate-500">${idx + 1}</td>
+                    <td class="p-3 whitespace-nowrap font-medium text-slate-700">
+                        <div>${act.tanggal}</div>
+                        <div class="text-[10px] text-slate-400"><i class="fa-regular fa-clock"></i> ${act.jamMulai || '08:00'} - ${act.jamSelesai || '12:00'}</div>
+                    </td>
+                    <td class="p-3 font-semibold text-blue-900 max-w-xs">${act.rhkIndividu}</td>
+                    <td class="p-3 text-slate-700">${act.uraian}</td>
+                    <td class="p-3 text-center whitespace-nowrap font-semibold">${act.volume} ${act.satuan}</td>
+                    <td class="p-3 text-center whitespace-nowrap font-semibold text-emerald-700">${act.jam} Jam</td>
+                    <td class="p-3 text-center whitespace-nowrap">
+                        <span class="px-2 py-0.5 bg-blue-50 text-blue-800 rounded-md text-[10px] font-bold border border-blue-200">${act.status || 'Selesai'}</span>
+                    </td>
+                    <td class="p-3 text-center whitespace-nowrap">
+                        <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded-lg text-[11px] font-medium inline-flex items-center gap-1">
+                            <i class="fa-solid fa-paperclip text-blue-800"></i> ${act.fileName || 'Berkas.pdf'}
+                        </span>
+                    </td>
+                    <td class="p-3 text-center whitespace-nowrap">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="editActivity(${act.id})" class="p-1 text-blue-800 hover:bg-blue-50 rounded transition" title="Edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteActivity(${act.id})" class="p-1 text-rose-600 hover:bg-rose-50 rounded transition" title="Hapus">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderReportTable(dataList) {
+            const reportTbody = document.getElementById('report-table-body');
+            reportTbody.innerHTML = '';
+
+            const data = dataList || getFilteredActivities();
+
+            if (data.length === 0) {
+                reportTbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Tidak ada data laporan harian pada rentang tanggal ini.</td></tr>`;
+                return;
+            }
+
+            data.forEach((act, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2 border border-slate-900 text-center font-medium">${idx + 1}</td>
+                    <td class="p-2 border border-slate-900 text-center font-sans text-[10px]">
+                        <div>${act.tanggal}</div>
+                        <div class="text-slate-500">${act.jamMulai || '08:00'}-${act.jamSelesai || '12:00'}</div>
+                    </td>
+                    <td class="p-2 border border-slate-900">
+                        <p class="font-bold text-slate-900">${act.rhkIndividu}</p>
+                        <p class="text-slate-700 mt-1">${act.uraian}</p>
+                    </td>
+                    <td class="p-2 border border-slate-900 text-center whitespace-nowrap">${act.volume} ${act.satuan}</td>
+                    <td class="p-2 border border-slate-900 text-center whitespace-nowrap">${act.jam} Jam</td>
+                    <td class="p-2 border border-slate-900 text-center whitespace-nowrap">${act.status || 'Selesai'}</td>
+                    <td class="p-2 border border-slate-900 font-mono text-[10px] text-slate-700">${act.fileName || 'Bukti_Dukung.pdf'}</td>
+                `;
+                reportTbody.appendChild(tr);
+            });
+        }
+
+        function showModal(title, msg) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = msg;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // EXPORT TO EXCEL SPREADSHEET (.CSV)
+        function downloadExcel() {
+            const filtered = getFilteredActivities();
+            let csv = "\ufeffREKAPITULASI LAPORAN KINERJA HARIAN ASN PERMENPANRB NO 6 TAHUN 2022\r\n";
+            csv += "Nama Pegawai: I Gede Kaneka Setiawan S.STP. M.PA., NIP: 19830809 200212 1 001\r\n";
+            csv += "Pejabat Penilai: Drs. I Wayan Sutapa M.Si., NIP: 19691102 199003 1 006\r\n\r\n";
+            csv += "No,Tanggal,Jam Mulai,Jam Selesai,RHK Atasan,RHK Individu,Uraian Aktivitas Kegiatan,Volume,Satuan,Durasi Jam,Status,File Bukti Dukung\r\n";
+
+            filtered.forEach((a, i) => {
+                csv += `${i+1},"${a.tanggal}","${a.jamMulai || '08:00'}","${a.jamSelesai || '12:00'}","${a.rhkAtasan}","${a.rhkIndividu}","${a.uraian}",${a.volume},"${a.satuan}",${a.jam},"${a.status || 'Selesai'}","${a.fileName || ''}"\r\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const startDate = document.getElementById('filter-start-date').value || '01-01-2026';
+            const endDate = document.getElementById('filter-end-date').value || 'Terakhir';
+
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `Rekap_Kinerja_ASN_KanekaSetiawan_${startDate}_sd_${endDate}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showModal("Unduh Excel Berhasil", "Spreadsheet Excel laporan kinerja berhasil diunduh.");
+        }
+
+        // EXPORT TO OFFICIAL WORD DOCUMENT (.DOC)
+        function downloadWord() {
+            const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head>
+                <meta charset='utf-8'>
+                <title>Laporan Kinerja ASN Dinas</title>
+                <style>
+                    @page { size: A4 portrait; margin: 2cm 2cm 2cm 2cm; }
+                    body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.4; color: #000; }
+                    table { border-collapse: collapse; width: 100%; margin-top: 8pt; margin-bottom: 8pt; }
+                    td, th { border: 1px solid #000; padding: 5pt; font-size: 10pt; vertical-align: top; }
+                    th { background-color: #f2f2f2; font-weight: bold; text-align: center; }
+                    .border-none td { border: none !important; }
+                    .text-center { text-align: center; }
+                    .font-bold { font-weight: bold; }
+                    .uppercase { text-transform: uppercase; }
+                    .underline { text-decoration: underline; }
+                </style>
+            </head>
+            <body>`;
+            
+            const footer = "</body></html>";
+            const docHTML = document.getElementById('official-report-doc').innerHTML;
+            const fullHTML = header + docHTML + footer;
+
+            const blob = new Blob(['\ufeff' + fullHTML], { type: 'application/msword' });
+            const startDate = document.getElementById('filter-start-date').value || '01-01-2026';
+            const endDate = document.getElementById('filter-end-date').value || 'Terakhir';
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Laporan_Kinerja_ASN_Naskah_Dinas_KanekaSetiawan_${startDate}_sd_${endDate}.doc`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showModal("Unduh Word Berhasil", "Naskah Dinas Word Laporan Kinerja ASN berhasil diunduh.");
+        }
+
+        // PRINT / DOWNLOAD PDF
+        function downloadPDF() {
+            switchTab('tab-export');
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        }
+    </script>
+</body>
+</html>
